@@ -1,0 +1,7 @@
+1. Linear Search
+=> BasicSearch
+=> CharSearch
+=> RangeSearch
+=> MinMaxSearch
+=> TwoDSearch
+=> TwoDMaxSearch
