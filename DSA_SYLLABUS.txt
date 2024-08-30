@@ -5,3 +5,7 @@
 => MinMaxSearch
 => TwoDSearch
 => TwoDMaxSearch
+
+2. BinarySearch
+=> SearchIndex
+=>OrderAgnosticBs
