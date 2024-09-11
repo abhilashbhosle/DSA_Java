@@ -2,27 +2,38 @@
 public class Practice {
 
     public static void main(String[] args) {
-        int[][] arr = {
-            {1,5},
-            {7,3},
-			{3,5}
-        };
-        int ans = findrichest(arr);
-        System.out.println(ans);
+        int[] nums = {3,1,3,4,2};
+        int start = 0;
+        int end = nums.length - 1;
+        int mid = start + (end - start) / 2;
+        int left = leftSearch(nums, start, mid);
+        int right = rigthSearch(nums, mid, end);
+        System.out.println(left);
+        System.out.println(right);
     }
 
-    static int findrichest(int[][] accounts) {
-        int richest = 0;
-        int holder = 0;
-         for (int[] person : accounts) {
-           for (int account : person) {
-                holder = holder + account;
+    static int leftSearch(int[] nums, int start, int end) {
+        while (start <= end) {
+            int mid = start + (end - start) / 2;
+            if (nums[mid] < nums[mid] + 1) {
+                start = mid + 1;
+                System.out.println(start);
+            } else {
+                return nums[mid];
             }
-            if (holder >= richest) {
-                richest = holder;
-            }
-			holder=0;
         }
-        return richest;
+        return start;
+    }
+
+    static int rigthSearch(int[] nums, int start, int end) {
+        while (start <= end) {
+            int mid = start + (end - start) / 2;
+            if (nums[mid] > nums[mid - 1]) {
+                end = mid - 1;
+            } else {
+                return nums[mid];
+            }
+        }
+        return end;
     }
 }
