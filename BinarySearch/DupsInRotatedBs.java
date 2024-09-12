@@ -25,7 +25,6 @@ public class DupsInRotatedBs {
     }
 
     static int BiarySearch(int[] arr, int target, int start, int end) {
-        System.out.println(arr);
         while (start <= end) {
             int mid = start + (end - start) / 2;
             if (arr[mid] > target) {
