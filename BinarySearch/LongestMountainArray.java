@@ -1,12 +1,10 @@
-public class Practice {
-
-    public static void main(String[] args) {
-        int[] nums = {0,1,2,3,4,5,4,3,2,1,0};
+public class LongestMountainArray{
+	public static void main(String[] args) {
+		int[] nums = {0,1,2,3,4,5,4,3,2,1,0};
         int ans = longestMountain(nums);
-        System.out.println(ans);  // Output: 5 (The longest mountain is [1, 4, 7, 3, 2])
-    }
-
-    static int longestMountain(int[] arr) {
+        System.out.println(ans);
+	}
+	static int longestMountain(int[] arr) {
         int n = arr.length;
         int longest = 0;
         for (int i = 1; i < n - 1; i++) {
