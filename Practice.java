@@ -2,56 +2,25 @@
 public class Practice {
 
     public static void main(String[] args) {
-        int[] nums = {1,3,1};
-        int ans = minimumMountainRemovals(nums);
+        int[] bloomDay = {1, 10, 3, 10, 2};
+        int m = 3;
+        int k = 1;
+        int ans = possibleDays(bloomDay, 5, m, k);
         System.out.println(ans);
     }
 
-    static int minimumMountainRemovals(int[] nums) {
-        int peakIndex = findPeak(nums);
-        int start = 0;
-        int end = nums.length - 1;
+    static int possibleDays(int[] bloomDay, int mid, int m, int k) {
         int count = 0;
-        int left = peakIndex - 1;
-        int right = peakIndex + 1;
-        if (nums[peakIndex] == nums[peakIndex - 1]) {
-            count++;
-        }
-        while (left > start) {
-
-            if (nums[left] <= nums[left + 1] && nums[left] >= nums[left - 1]) {
-                left--;
+        int possibleAns = 0;
+        for (int day : bloomDay) {
+            if (day <= mid) {
+                count = count + 1;
             } else {
-                left--;
-                count++;
+                possibleAns = possibleAns + (count / k);
+                count = 0;
             }
         }
-        if (nums[peakIndex] == nums[peakIndex + 1]) {
-            count++;
-        }
-        while (right < end) {
-
-            if (nums[right] >= nums[right + 1] && nums[right] <= nums[right - 1]) {
-                right++;
-            } else {
-                right++;
-                count++;
-            }
-        }
-        return peakIndex;
-    }
-
-    static int findPeak(int[] nums) {
-        int end = nums.length - 1;
-        int start = 0;
-        while (start < end) {
-            int mid = start + (end - start) / 2;
-            if (nums[mid] > nums[mid + 1]) {
-                end = mid;
-            } else {
-                start = mid + 1;
-            }
-        }
-        return start;
+        possibleAns = possibleAns + (count / k);
+        return possibleAns;
     }
 }
