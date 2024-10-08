@@ -1,8 +1,8 @@
 
 public class BooksAllocation {
     public static void main(String[] args) {
-		int[] nums={7,2,5,10,8};
-		int k=2;
+		int[] nums={25,46,28,49,24};
+		int k=4;
 		int ans=splitArray(nums, k);
 		System.out.println(ans);
     }
@@ -13,27 +13,24 @@ public class BooksAllocation {
 			low=Math.max(low, nums[i]);
 			high=high+nums[i];
 		}   
-		while(low<high){
+		while(low<=high){
 			int mid=low+(high-low)/2;
 			int possibility=findMax(nums,mid);
-			if(possibility==k){
-				return mid;
-			}
-			if(possibility<k){
+			if(possibility<=k){
 				high=mid-1;
 			}else{
 				low=mid+1;
 			}
 		}
-		return -1;
+		return low;
     }
 	static int findMax(int[]nums,int mid){
-		int count=0;
+		int count=1;
 		int sum=0;
 		for(int i=0;i<nums.length;i++){
 			if(sum+nums[i]>mid){
 				count++;
-				sum+=nums[i];
+				sum=nums[i];
 			}
 			else{
 				sum+=nums[i];
