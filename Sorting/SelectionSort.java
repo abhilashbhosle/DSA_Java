@@ -2,8 +2,6 @@
 import java.util.Arrays;
 
 // Select the max item and replace it in the correct place
-
-
 public class SelectionSort{
 	public static void main(String args[]){
 		int[] arr={5,4,3,2,1};
