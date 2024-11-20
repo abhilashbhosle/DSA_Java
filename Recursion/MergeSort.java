@@ -3,7 +3,7 @@ import java.util.Arrays;
 
 public class MergeSort {
     public static void main(String[] args) {
-        int[] arr = {5,1,1,2,0,0};
+        int[] arr = {5,4,3,2,1};
         int[] ans = sort(arr);
 		System.out.println(Arrays.toString(ans));
     }
@@ -21,7 +21,6 @@ public class MergeSort {
     }
 
     static int[] merge(int[] left, int[] right) {
-		System.out.println("merge function called with"+Arrays.toString(left)+", "+Arrays.toString(right));
         int i = 0;
         int j = 0;
         int k = 0;
@@ -49,3 +48,9 @@ public class MergeSort {
 		return mergedArr;
 }
 }
+
+// Time Complexity : 
+//Array is getting divided by half every time i.e; logN.
+// Every time the array is divided the comparision is made those many times i.e; N.
+// Therefore TimeComplexity=O(NlogN)
+
