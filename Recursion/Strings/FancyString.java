@@ -1,6 +1,6 @@
 public class FancyString{
 	public static void main(String[] args) {
-		String s="aab";
+		String s="leeetcode";
 		int count=0;
 		char ch=0;
 		String ans= fancy(s,count,ch);
