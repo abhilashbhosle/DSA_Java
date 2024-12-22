@@ -36,7 +36,7 @@ class DLL {
         Node value = new Node(val);
         if (index == 0) {
             insertFirst(val);
-			return;
+            return;
         }
         int size = 1;
         Node node = head;
@@ -52,23 +52,23 @@ class DLL {
         value.next = hold;
     }
 
-	// delete head
-	public void deleteFirst(){
-		head=head.next;
-		head.prev=null;
-		if(head==null){
-			tail=null;
-		}
-	}
-	
-	// delete tail
-	public void deleteLast(){
-		if(tail==null){
-			return;
-		}
-		tail=tail.prev;
-		tail.next=null;
-	}
+    // delete head
+    public void deleteFirst() {
+        head = head.next;
+        head.prev = null;
+        if (head == null) {
+            tail = null;
+        }
+    }
+
+    // delete tail
+    public void deleteLast() {
+        if (tail == null) {
+            return;
+        }
+        tail = tail.prev;
+        tail.next = null;
+    }
 
     // displaying the list
     public void display() {
