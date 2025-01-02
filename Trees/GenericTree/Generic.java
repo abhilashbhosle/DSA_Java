@@ -5,7 +5,6 @@ import java.util.Stack;
 public class Generic {
 
     private static class Node {
-
         int data;
         ArrayList<Node> children = new ArrayList<>();
     }
@@ -24,7 +23,7 @@ public class Generic {
 
     private static int size(Node node) {
         int s = 0;
-        for (Node child : node.children) {
+        for (Node child : node.children) {  
             int cs = size(child);
             s = s + cs;
         }
@@ -44,6 +43,15 @@ public class Generic {
         return max;
     } 
 
+	private static int height(Node node){
+		int h=-1;
+		for(Node child:node.children){
+			int ch=height(child);
+			h=Math.max(ch, h);
+		}
+		h+=1;
+		return h;
+	}
 
     public static void main(String[] args) {
         int[] arr = {10, 20, 50, -1, 60, -1, -1, 30, 70, -1, 80, 110, -1, 120, -1, -1, 90, -1, -1, 40, 100, -1, -1, -1};
@@ -66,5 +74,6 @@ public class Generic {
         display(root);
         System.out.println(size(root));
         System.out.println(maximum(root));
+		System.out.println(height(root));
     }
 }
