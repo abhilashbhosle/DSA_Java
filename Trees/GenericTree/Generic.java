@@ -1,6 +1,7 @@
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Queue;
 import java.util.Stack;
 
@@ -197,7 +198,23 @@ public class Generic {
             }
         }
     }
-
+	public static void mirror(Node node){
+		for(Node child:node.children){
+			mirror(child);
+		}
+		Collections.reverse(node.children);
+	}
+	public static void removeLeaves(Node node){
+		for(int i=node.children.size()-1;i>=0;i--){
+			Node child=node.children.get(i);
+			if(child.children.isEmpty()){
+				node.children.remove(child);
+			}
+		}
+		for(Node child:node.children){
+			removeLeaves(child);
+		}
+	}
     public static void main(String[] args) {
         int[] arr = {10, 20, 50, -1, 60, -1, -1, 30, 70, -1, 80, 110, -1, 120, -1, -1, 90, -1, -1, 40, 100, -1, -1, -1};
         Node root = null;
@@ -217,14 +234,19 @@ public class Generic {
                 st.push(t);
             }
         }
+        display(root);
+		// System.out.println(".........");
+		removeLeaves(root);
         // display(root);
+
         // System.out.println(size(root));
         // System.out.println(maximum(root));
         // System.out.println(height(root));
         // traversal(root);
         // levelOrder(root);
-        levelOrderLineWise(root);
-        levelOrderLineWise4(root);
+        // levelOrderLineWise(root);
+        // levelOrderLineWise4(root);
         // levelOrderLineWiseZigZag(root);
+		// mirror(root);
     }
 }
