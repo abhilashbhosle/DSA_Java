@@ -220,7 +220,7 @@ public class Generic {
         }
     }
 
-	// Linearize the tree
+    // Linearize the tree
     private static void linearizeTree(Node node) {
         for (Node child : node.children) {
             linearizeTree(child);
@@ -253,7 +253,8 @@ public class Generic {
         }
         return false;
     }
-	// Node to Root Path
+    // Node to Root Path
+
     private static ArrayList<Integer> nodeToRootPath(Node node, int data) {
         if (node.data == data) {
             ArrayList<Integer> list = new ArrayList<>();
@@ -269,6 +270,65 @@ public class Generic {
         }
         return new ArrayList<>();
     }
+
+    // Lowest Comon Ancestor
+    private static int LowestCommonAncestor(Node node, int d1, int d2) {
+        ArrayList<Integer> p1 = nodeToRootPath(node, d1);
+        ArrayList<Integer> p2 = nodeToRootPath(node, d2);
+        int i = p1.size() - 1;
+        int j = p2.size() - 1;
+        while (i >= 0 && j >= 0 && p1.get(i) == p2.get(j)) {
+            i--;
+            j--;
+        }
+        i++;
+        j++;
+        return p1.get(i);
+    }
+
+    // Distance between 2 Nodes
+    private static int DB2N(Node node, int n1, int n2) {
+        ArrayList<Integer> p1 = nodeToRootPath(node, n1);
+        ArrayList<Integer> p2 = nodeToRootPath(node, n2);
+        int i = p1.size() - 1;
+        int j = p2.size() - 1;
+        while (i >= 0 && j >= 0 && p1.get(i) == p2.get(j)) {
+            i--;
+            j--;
+        }
+        i++;
+        j++;
+        return i + j;
+    }
+
+    // Check whether two roots are similar
+    private static boolean areSimilar(Node node1, Node node2) {
+        if (node1.children.size() != node2.children.size()) {
+            return false;
+        }
+        for (int i = 0; i < node1.children.size(); i++) {
+            Node child1 = node1.children.get(i);
+            Node child2 = node2.children.get(i);
+            if (areSimilar(child1, child2) == false) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+	// Check whether two roots are mirror images or not
+	private static boolean areMirror(Node node1,Node node2){
+		if(node1.children.size()!=node2.children.size()){
+			return false;
+		}
+		for(int i=0;i<node1.children.size();i++){
+			int j=node2.children.size()-1-i;
+			if(areMirror(node1.children.get(i), node2.children.get(i))==false){
+				return false;
+			}
+		}
+		return true;
+	}
 
     public static void main(String[] args) {
         int[] arr = {10, 20, 50, -1, 60, -1, -1, 30, 70, -1, 80, 110, -1, 120, -1, -1, 90, -1, -1, 40, 100, -1, -1, -1};
@@ -289,6 +349,23 @@ public class Generic {
                 st.push(t);
             }
         }
+        int[] arr1 = {100, 20, 50, -1, 60, -1, -1, 30, 70, -1, 80, 110, -1, 120, -1, -1, 900, -1, -1, 46, 100, -1, -1, -1};
+        Node root1 = null;
+        Stack<Node> st1 = new Stack<>();
+        for (int i = 0; i < arr1.length; i++) {
+            if (arr1[i] == -1) {
+                st1.pop();
+            } else {
+                Node t = new Node();
+                t.data = arr1[i];
+                if (!st1.isEmpty()) {
+                    st1.peek().children.add(t);
+                } else {
+                    root1 = t;
+                }
+                st1.push(t);
+            }
+        }
         display(root);
         // System.out.println(size(root));
         // System.out.println(maximum(root));
@@ -303,6 +380,10 @@ public class Generic {
         // linearizeTree(root);
         // display(root);
         // System.out.println(findIntree(root, 110));
-        System.out.println(nodeToRootPath(root, 110));
+        // System.out.println(nodeToRootPath(root, 110));
+        // System.out.println(LowestCommonAncestor(root, 70, 80));
+        // System.out.println(DB2N(root, 70, 110));
+        // System.out.println(areSimilar(root, root1));
+        System.out.println(areMirror(root, root1));
     }
 }
