@@ -145,8 +145,10 @@ public class Generic {
     }
 
     private static class Pair {
-       private  Node node;
+
+        private Node node;
         private int level;
+
         Pair(Node node, int level) {
             this.node = node;
             this.level = level;
@@ -155,20 +157,20 @@ public class Generic {
 
     private static void levelOrderLineWise4(Node node) {
         Queue<Pair> q = new ArrayDeque<>();
-        q.add(new Pair(node,1));
-		int level=1;
-		while(!q.isEmpty()){
-			Pair p=q.remove();
-			if(p.level>level){
-				level=p.level;
-			   System.out.println("");
-			}
-			System.out.print(p.node.data + " ");
-			for(Node child : p.node.children){
-				Pair cp=new Pair(child, p.level+1);
-				q.add(cp);
-			}
-		}
+        q.add(new Pair(node, 1));
+        int level = 1;
+        while (!q.isEmpty()) {
+            Pair p = q.remove();
+            if (p.level > level) {
+                level = p.level;
+                System.out.println("");
+            }
+            System.out.print(p.node.data + " ");
+            for (Node child : p.node.children) {
+                Pair cp = new Pair(child, p.level + 1);
+                q.add(cp);
+            }
+        }
     }
 
     private static void levelOrderLineWiseZigZag(Node node) {
@@ -198,23 +200,76 @@ public class Generic {
             }
         }
     }
-	public static void mirror(Node node){
-		for(Node child:node.children){
-			mirror(child);
-		}
-		Collections.reverse(node.children);
-	}
-	public static void removeLeaves(Node node){
-		for(int i=node.children.size()-1;i>=0;i--){
-			Node child=node.children.get(i);
-			if(child.children.isEmpty()){
-				node.children.remove(child);
-			}
-		}
-		for(Node child:node.children){
-			removeLeaves(child);
-		}
-	}
+
+    private static void mirror(Node node) {
+        for (Node child : node.children) {
+            mirror(child);
+        }
+        Collections.reverse(node.children);
+    }
+
+    private static void removeLeaves(Node node) {
+        for (int i = node.children.size() - 1; i >= 0; i--) {
+            Node child = node.children.get(i);
+            if (child.children.isEmpty()) {
+                node.children.remove(child);
+            }
+        }
+        for (Node child : node.children) {
+            removeLeaves(child);
+        }
+    }
+
+	// Linearize the tree
+    private static void linearizeTree(Node node) {
+        for (Node child : node.children) {
+            linearizeTree(child);
+        }
+        while (node.children.size() > 1) {
+            Node removeLast = node.children.remove(node.children.size() - 1);
+            Node getCurrentLast = node.children.get(node.children.size() - 1);
+            Node getTailOfLast = getTail(getCurrentLast);
+            getTailOfLast.children.add(removeLast);
+        }
+    }
+
+    private static Node getTail(Node node) {
+        while (node.children.size() == 1) {
+            node = node.children.get(0);
+        }
+        return node;
+    }
+
+    // Find in Generic Tree
+    private static boolean findIntree(Node node, int data) {
+        if (node.data == data) {
+            return true;
+        }
+        for (Node child : node.children) {
+            boolean fc = findIntree(child, data);
+            if (fc) {
+                return true;
+            }
+        }
+        return false;
+    }
+	// Node to Root Path
+    private static ArrayList<Integer> nodeToRootPath(Node node, int data) {
+        if (node.data == data) {
+            ArrayList<Integer> list = new ArrayList<>();
+            list.add(node.data);
+            return list;
+        }
+        for (Node child : node.children) {
+            ArrayList<Integer> ptc = nodeToRootPath(child, data);
+            if (!ptc.isEmpty()) {
+                ptc.add(node.data);
+                return ptc;
+            }
+        }
+        return new ArrayList<>();
+    }
+
     public static void main(String[] args) {
         int[] arr = {10, 20, 50, -1, 60, -1, -1, 30, 70, -1, 80, 110, -1, 120, -1, -1, 90, -1, -1, 40, 100, -1, -1, -1};
         Node root = null;
@@ -235,10 +290,6 @@ public class Generic {
             }
         }
         display(root);
-		// System.out.println(".........");
-		removeLeaves(root);
-        // display(root);
-
         // System.out.println(size(root));
         // System.out.println(maximum(root));
         // System.out.println(height(root));
@@ -247,6 +298,11 @@ public class Generic {
         // levelOrderLineWise(root);
         // levelOrderLineWise4(root);
         // levelOrderLineWiseZigZag(root);
-		// mirror(root);
+        // mirror(root);
+        // System.out.println(".........");
+        // linearizeTree(root);
+        // display(root);
+        // System.out.println(findIntree(root, 110));
+        System.out.println(nodeToRootPath(root, 110));
     }
 }
