@@ -9,7 +9,6 @@ public class AllOccurences {
         int[] ans = allIndices(arr, 3, 0, 0);
 		System.out.println(Arrays.toString(ans));
     }
-
     static int[] allIndices(int[] arr, int target, int index, int foundSoFar) {
 		if(index==arr.length){
 			return new int[foundSoFar];
