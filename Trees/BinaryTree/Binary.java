@@ -142,6 +142,7 @@ public class Binary {
         }
         return false;
     }
+
     public static boolean findPath(Node node, int num, ArrayList<Integer> list) {
         if (node == null) {
             return false;
@@ -258,7 +259,7 @@ public class Binary {
         if (node == null) {
             return null;
         }
-        node=node.left.left;
+        node = node.left.left;
         transFormBackFromLeftClone(node.left);
         transFormBackFromLeftClone(node.right);
         // Node newNode = new Node(node.data, lcr, null);
@@ -266,52 +267,130 @@ public class Binary {
     }
 
     // remove all the leaves
-    public static Node removeLeaves(Node node){
-        if(node==null){
+    public static Node removeLeaves(Node node) {
+        if (node == null) {
             return null;
         }
-        if(node.left==null && node.right==null){
+        if (node.left == null && node.right == null) {
             return null;
         }
-        node.left=removeLeaves(node.left);
-        node.right=removeLeaves(node.right);
+        node.left = removeLeaves(node.left);
+        node.right = removeLeaves(node.right);
         return node;
     }
 
     // diameter of a binary tree
-    public static class DiaPair{
+    public static class DiaPair {
+
         int ht;
         int dia;
     }
-    public static DiaPair diameter2(Node node){
-        if(node==null){
-            DiaPair bp=new DiaPair();
-            bp.ht=-1;
-            bp.dia=0;
+
+    public static DiaPair diameter2(Node node) {
+        if (node == null) {
+            DiaPair bp = new DiaPair();
+            bp.ht = -1;
+            bp.dia = 0;
             return bp;
         }
-        DiaPair lp=diameter2(node.left);
-        DiaPair rp=diameter2(node.right);
-        DiaPair mp=new DiaPair();
-        mp.ht=Math.max(lp.ht, rp.ht)+1;
-        int fes=lp.ht+rp.ht+2;
-        mp.dia=Math.max(fes, Math.max(lp.dia, rp.dia));
+        DiaPair lp = diameter2(node.left);
+        DiaPair rp = diameter2(node.right);
+        DiaPair mp = new DiaPair();
+        mp.ht = Math.max(lp.ht, rp.ht) + 1;
+        int fes = lp.ht + rp.ht + 2;
+        mp.dia = Math.max(fes, Math.max(lp.dia, rp.dia));
         return mp;
     }
 
     // tilt of a binary tree
-    static int tilt=0;
-    public static int tilt(Node node){
-        if(node==null){
+    static int tilt = 0;
+
+    public static int tilt(Node node) {
+        if (node == null) {
             return 0;
         }
-        int ls=tilt(node.left);
-        int rs=tilt(node.right);
-        int abs=Math.abs(ls-rs);
-        tilt+=abs;
-        int ts=ls+rs+node.data;
+        int ls = tilt(node.left);
+        int rs = tilt(node.right);
+        int abs = Math.abs(ls - rs);
+        tilt += abs;
+        int ts = ls + rs + node.data;
         return ts;
     }
+
+    // tree is balanced
+    static boolean isBal = true;
+
+    public static int isBalanced(Node node) {
+        if (node == null) {
+            return -1;
+        }
+        int lh = isBalanced(node.left);
+        int rh = isBalanced(node.right);
+        int gap = Math.abs(rh - lh);
+        if (gap > 1) {
+            isBal = false;
+        }
+        int th = Math.max(lh, rh) + 1;
+        return th;
+    }
+
+    public static Node getRightMostNode(Node leftNode, Node current) {
+        while (leftNode.right != null && leftNode.right != current) {
+            leftNode = leftNode.right;
+        }
+        return leftNode;
+    }
+
+    // Morris inorder traversal
+    public static ArrayList<Integer> MorrisIn(Node node) {
+        ArrayList<Integer> list = new ArrayList<>();
+        Node current = node;
+        while (current != null) {
+            Node leftNode = current.left;
+            if (leftNode == null) {
+                list.add(current.data);
+                current = current.right;
+            } else {
+                Node rightMostNode = getRightMostNode(leftNode, current);
+                if (rightMostNode.right == null) {
+                    rightMostNode.right = current;
+                    current = current.left;
+                } else {
+                    rightMostNode.right = null;
+                    list.add(rightMostNode.data);
+                    current = current.right;
+                }
+            }
+        }
+        return list;
+    }
+
+    // Morris pre order traversal
+    public static ArrayList<Integer> MorrisPre(Node node){
+        Node current=node;
+        ArrayList<Integer> list=new ArrayList<>();
+        while(current!=null){
+            Node leftNode=current.left;
+            if(leftNode==null){
+                
+                list.add(current.data);
+                current=current.right;
+            }else{
+                Node rightMostNode=getRightMostNode(leftNode, current);
+                if(rightMostNode.right==null){
+                    rightMostNode.right=current;
+                    list.add(current.data);
+                    current=current.left;
+                }
+                else{
+                    rightMostNode.right=null;
+                    current=current.right;
+                }
+            }
+        }
+        return list;
+    }
+
     public static void main(String[] args) {
         Integer[] arr = {50, 25, 12, null, null, 37, 30, null, null, null, 75, 62, null, 70, null, null, 87, null, null};
         Node root = new Node(arr[0], null, null);
@@ -370,7 +449,10 @@ public class Binary {
         // display(root);
         //  DiaPair p=diameter2(root);
         //  System.out.println(p.dia);
-        System.out.println(tilt(root));
+        // System.out.println(tilt(root));
+        // isBalanced(root);
+        // System.out.println(MorrisIn(root));
+        System.out.println(MorrisPre(root));
 
     }
 }
