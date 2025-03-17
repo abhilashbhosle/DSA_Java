@@ -10,7 +10,7 @@ import java.util.Queue;
         this.nbr = nbr;
     }
 }
- class Pair{
+class Pair{
 	int vertex;
 	String psf;
 	Pair(int vertex, String psf){
