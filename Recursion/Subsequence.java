@@ -11,14 +11,15 @@ public class Subsequence {
     }
 
     static ArrayList<String> findSubsequence(String up, String p) {
-        if (up.isEmpty()) {
-            ArrayList<String> astr = new ArrayList<>();
-            astr.add(p);
-            return astr;
+        if(up.isEmpty()){
+            ArrayList<String> res=new ArrayList<>();
+            res.add(p);
+            return res;
         }
-        ArrayList<String> left=findSubsequence(up.substring(1), p + up.charAt(0));
-        ArrayList<String> right=findSubsequence(up.substring(1), p);
-        left.addAll(right);
-        return left;
+       char c=up.charAt(0);
+       ArrayList<String> left= findSubsequence(up.substring(1), p+c);
+       ArrayList<String> right= findSubsequence(up.substring(1), p);
+       left.addAll(right);
+       return left;
     }
 }
